@@ -1,0 +1,10 @@
+<resources>
+
+    <style name="FastScrollStyle">
+        <item name="fastScrollTextColor">#FFFFFFFF</item>
+        <item name="fastScrollActiveColor">?colorPrimary</item>
+        <item name="fastScrollInactiveColor">#ff636363</item>
+        <item name="fastScrollTextSize">45dp</item>
+    </style>
+
+</resources>

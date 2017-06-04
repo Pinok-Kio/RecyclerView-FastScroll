@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FastScroller">
+        <attr name="fastScrollTextColor" format="color"/>
+        <attr name="fastScrollActiveColor" format="color"/>
+        <attr name="fastScrollInactiveColor" format="color"/>
+        <attr name="fastScrollTextSize" format="dimension"/>
+    </declare-styleable>
+</resources>
