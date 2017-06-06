@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.*;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -59,13 +61,13 @@ public final class FastScroller extends View implements View.OnLayoutChangeListe
 
     private int scrollX;
 
-
     public static void wrap(@NonNull RecyclerView recyclerView) {
         new FastScroller(recyclerView);
     }
 
     private FastScroller(@NonNull RecyclerView recyclerView) {
         super(recyclerView.getContext());
+        setId(R.id.id_recyclerViewFastScroller);
         this.recyclerView = recyclerView;
         isRtl = recyclerView.getLayoutDirection() == LAYOUT_DIRECTION_RTL;
         scrollX = isRtl ? thumbSideGap : dp(117);
@@ -406,5 +408,24 @@ public final class FastScroller extends View implements View.OnLayoutChangeListe
             return 0;
         }
         return (int) Math.ceil(DENSITY * value);
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Bundle savedState = new Bundle();
+        savedState.putParcelable("ARG_SUPER_STATE", super.onSaveInstanceState());
+        savedState.putFloat("ARG_PROGRESS", progress);
+        return savedState;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof Bundle) {
+            Bundle savedState = (Bundle) state;
+            super.onRestoreInstanceState(savedState.getParcelable("ARG_SUPER_STATE"));
+            progress = savedState.getFloat("ARG_PROGRESS");
+        } else {
+            super.onRestoreInstanceState(state);
+        }
     }
 }

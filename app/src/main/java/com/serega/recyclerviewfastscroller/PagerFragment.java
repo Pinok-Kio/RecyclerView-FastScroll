@@ -12,6 +12,7 @@ import com.serega.fastscroller.FastScrollAdapter;
 import com.serega.fastscroller.FastScroller;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -60,6 +61,7 @@ public class PagerFragment extends Fragment {
 
         Adapter(List<String> names) {
             this.names = names;
+            Collections.sort(this.names);
         }
 
         @Override

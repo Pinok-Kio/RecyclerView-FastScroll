@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
                 return "Page #" + position;
             }
         });
-        pager.setOffscreenPageLimit(2);
         tabs.setupWithViewPager(pager);
     }
 }
