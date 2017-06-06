@@ -87,7 +87,7 @@ public final class FastScroller extends View implements View.OnLayoutChangeListe
         }
     }
 
-    private void initWithRecyclerView(@NonNull RecyclerView recyclerView) {
+    private void initWithRecyclerView(@NonNull final RecyclerView recyclerView) {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             boolean scrollingByUser;
 
@@ -168,7 +168,7 @@ public final class FastScroller extends View implements View.OnLayoutChangeListe
                 stopScroll();
 
                 getCurrentLetter();
-                invalidate();
+                postInvalidateOnAnimation();
                 return true;
 
             case MotionEvent.ACTION_MOVE:
@@ -193,14 +193,14 @@ public final class FastScroller extends View implements View.OnLayoutChangeListe
                     progress = 1;
                 }
                 getCurrentLetter();
-                invalidate();
+                postInvalidateOnAnimation();
                 return true;
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 pressed = false;
                 lastUpdateTime = System.currentTimeMillis();
-                invalidate();
+                postInvalidateOnAnimation();
                 return true;
         }
         return super.onTouchEvent(event);
@@ -258,6 +258,9 @@ public final class FastScroller extends View implements View.OnLayoutChangeListe
 
     @Override
     protected void onDraw(Canvas canvas) {
+        if (!shouldDraw()) {
+            return;
+        }
         updatePaintColors();
 
         int y = (int) Math.ceil((getMeasuredHeight() - thumbTopBottomOffset * 2 - thumbHeight) * progress);
@@ -275,7 +278,7 @@ public final class FastScroller extends View implements View.OnLayoutChangeListe
                 dt = 17;
             }
             lastUpdateTime = newTime;
-            invalidate();
+            postInvalidateOnAnimation();
             if (pressed && letterLayout != null) {
                 bubbleProgress += dt / 120.0f;
                 if (bubbleProgress > 1.0f) {
@@ -288,6 +291,13 @@ public final class FastScroller extends View implements View.OnLayoutChangeListe
                 }
             }
         }
+    }
+
+    private boolean shouldDraw() {
+        return recyclerView != null
+                && recyclerView.getAdapter() != null
+                && recyclerView.getLayoutManager() != null
+                && recyclerView.getLayoutManager().getChildCount() != recyclerView.getAdapter().getItemCount();
     }
 
     private void updatePaintColors() {
@@ -392,7 +402,7 @@ public final class FastScroller extends View implements View.OnLayoutChangeListe
 
     private void setProgress(float value) {
         progress = value;
-        invalidate();
+        postInvalidateOnAnimation();
     }
 
     @Override
