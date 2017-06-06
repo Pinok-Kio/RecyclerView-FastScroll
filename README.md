@@ -1,4 +1,4 @@
-# RecyclerVIew-FastScroll
+# RecyclerView-FastScroll
 ![](https://github.com/StudentNSK/RecyclerView-FastScroll/blob/screenshot/screenshot/screen.gif)
 
 #
